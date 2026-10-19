@@ -1,0 +1,16 @@
+[Unit]
+Description=Shipa Info Telegram bot
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/opt/shipa_info/bot
+EnvironmentFile=/opt/shipa_info/.env
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

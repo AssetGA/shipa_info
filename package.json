@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "bot": "npm run start --prefix bot",
+    "bot:dev": "npm run dev --prefix bot"
   },
   "dependencies": {
+    "mongodb": "^7.7.0",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0"
