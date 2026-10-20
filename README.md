@@ -70,10 +70,49 @@
 ## Деплой на Vercel
 
 1. Импортируйте репозиторий в [Vercel](https://vercel.com/new).
-2. **Environment variables** (Production):
-   - `MONGODB_URI` — URI к Mongo на сервере (с `authSource=shipa_info`).
+2. **Environment variables** (Production **и** Preview, если нужно):
+   - `MONGODB_URI` — URI к Mongo **на публичном IP/DNS сервера**, не `127.0.0.1`.
    - `MONGODB_DB_NAME` — `shipa_info` (если не задано в URI).
-3. Deploy. Root directory — корень репозитория, build: `next build`.
+3. **Redeploy** после изменения переменных (Deployments → … → Redeploy).
+4. Проверка: `https://ВАШ-ДОМЕН.vercel.app/api/health` → `{"mongo":"ok"}`.
+
+### Почему Vercel не видит Mongo «на сервере»
+
+По умолчанию в `docker-compose.yml` порт Mongo: **`127.0.0.1:27017`** — с интернета (и с Vercel) он **недоступен**. Это нормально для бота на том же сервере, но **не для Vercel**.
+
+**На сервере:**
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.vercel-access.yml up -d
+```
+
+Откройте firewall **точечно** (пример UFW):
+
+```bash
+sudo ufw allow from ВАШ_IP to any port 27017 proto tcp
+# или временно для проверки — потом сузить; лучше Atlas/VPN
+```
+
+**В Vercel → Settings → Environment Variables:**
+
+```env
+MONGODB_URI=mongodb://shipa_app:ПАРОЛЬ@123.45.67.89:27017/shipa_info?authSource=shipa_info
+```
+
+- `@123.45.67.89` — **внешний IP сервера**, не `localhost` / `127.0.0.1`.
+- Спецсимволы в пароле — [URL-encode](https://www.urlencoder.org/) (`@` → `%40`, `#` → `%23`).
+- Пароль должен совпадать с `MONGO_APP_PASSWORD` из `.env` на сервере.
+
+**Типичные ошибки в `/api/health`:**
+
+| Сообщение | Решение |
+|-----------|---------|
+| `MONGODB_URI is not set` | Добавить переменную в Vercel и redeploy |
+| `connect ECONNREFUSED` | Mongo не слушает снаружи / firewall / неверный IP |
+| `Authentication failed` | Неверный логин/пароль или нет `?authSource=shipa_info` |
+| `timed out` | Порт 27017 закрыт провайдером или firewall |
+
+Более безопасная альтернатива без открытия 27017 в интернет — **MongoDB Atlas** (бесплатный tier): тот же `MONGODB_URI` в Vercel и на сервере для бота.
 
 Файл `vercel.json` не обязателен; при необходимости добавьте регион поближе к серверу с Mongo.
 

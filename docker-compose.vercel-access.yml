@@ -1,0 +1,10 @@
+# Дополнение для доступа Vercel к Mongo на этом сервере.
+# Запуск: docker compose -f docker-compose.yml -f docker-compose.vercel-access.yml up -d
+#
+# ОБЯЗАТЕЛЬНО: firewall — не открывайте 27017 для всего интернета без крайней нужды.
+# Предпочтительно: MongoDB Atlas или VPN между Vercel и сервером.
+
+services:
+  mongodb:
+    ports:
+      - "27017:27017"

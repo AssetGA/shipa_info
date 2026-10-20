@@ -35,6 +35,13 @@ export function InfoWindow({ post, emptyMessage }: Props) {
       <article className="whitespace-pre-wrap text-base leading-relaxed text-zinc-700">
         {post.content}
       </article>
+      <button
+        type="button"
+        onClick={() => window.location.reload()}
+        className="shrink-0 rounded-xl border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100"
+      >
+        ↻ Обновить
+      </button>
     </section>
   );
 }
