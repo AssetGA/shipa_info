@@ -6,10 +6,7 @@ import type { PostBilingualView } from "@/lib/translate/post-view";
 type Props = {
   view: PostBilingualView;
   locale: Locale;
-  messages: Pick<
-    Messages,
-    "postLangRu" | "postLangKk" | "translationFailed"
-  >;
+  messages: Pick<Messages, "postLangRu" | "postLangKk" | "translationFailed">;
   compact?: boolean;
 };
 
@@ -24,25 +21,6 @@ export function BilingualPostBlock({
   return (
     <article className="flex flex-col gap-4">
       <p className="text-sm text-zinc-500">{date}</p>
-
-      <section aria-labelledby={`post-${view.id}-ru`}>
-        <h3
-          id={`post-${view.id}-ru`}
-          className="text-xs font-semibold uppercase tracking-wide text-zinc-500"
-        >
-          {messages.postLangRu}
-        </h3>
-        <h2
-          className={`mt-1 font-semibold text-zinc-900 ${compact ? "text-lg" : "text-xl sm:text-2xl"}`}
-        >
-          {view.ru.title}
-        </h2>
-        <p
-          className={`mt-3 whitespace-pre-wrap text-zinc-700 ${compact ? "line-clamp-6 text-sm leading-relaxed" : "text-base leading-relaxed"}`}
-        >
-          {view.ru.content}
-        </p>
-      </section>
 
       <section
         className="border-t border-zinc-100 pt-4"
@@ -60,14 +38,45 @@ export function BilingualPostBlock({
           </p>
         )}
         <h2
-          className={`mt-1 font-semibold text-zinc-900 ${compact ? "text-lg" : "text-xl sm:text-2xl"}`}
+          className={`mt-1 font-semibold text-zinc-900 ${
+            compact ? "text-lg" : "text-xl sm:text-2xl"
+          }`}
         >
           {view.kk.title}
         </h2>
         <p
-          className={`mt-3 whitespace-pre-wrap text-zinc-700 ${compact ? "line-clamp-6 text-sm leading-relaxed" : "text-base leading-relaxed"}`}
+          className={`mt-3 whitespace-pre-wrap text-zinc-700 ${
+            compact
+              ? "line-clamp-6 text-sm leading-relaxed"
+              : "text-base leading-relaxed"
+          }`}
         >
           {view.kk.content}
+        </p>
+      </section>
+
+      <section aria-labelledby={`post-${view.id}-ru`}>
+        <h3
+          id={`post-${view.id}-ru`}
+          className="text-xs font-semibold uppercase tracking-wide text-zinc-500"
+        >
+          {messages.postLangRu}
+        </h3>
+        <h2
+          className={`mt-1 font-semibold text-zinc-900 ${
+            compact ? "text-lg" : "text-xl sm:text-2xl"
+          }`}
+        >
+          {view.ru.title}
+        </h2>
+        <p
+          className={`mt-3 whitespace-pre-wrap text-zinc-700 ${
+            compact
+              ? "line-clamp-6 text-sm leading-relaxed"
+              : "text-base leading-relaxed"
+          }`}
+        >
+          {view.ru.content}
         </p>
       </section>
     </article>
