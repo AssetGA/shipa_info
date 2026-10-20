@@ -1,22 +1,29 @@
-import { formatDateRu } from "@/lib/format";
-import type { InfoPostPublic } from "@/lib/types";
+import { BilingualPostBlock } from "@/components/BilingualPostBlock";
+import type { Messages } from "@/lib/i18n/messages";
+import type { Locale } from "@/lib/i18n/locale";
+import type { PostBilingualView } from "@/lib/translate/post-view";
 
 type Props = {
-  post: InfoPostPublic | null;
-  emptyMessage?: string;
+  view: PostBilingualView | null;
+  locale: Locale;
+  messages: Pick<
+    Messages,
+    | "emptyPost"
+    | "postLangRu"
+    | "postLangKk"
+    | "postStoredNote"
+    | "translationFailed"
+  >;
 };
 
-export function InfoWindow({ post, emptyMessage }: Props) {
-  if (!post) {
+export function InfoWindow({ view, locale, messages }: Props) {
+  if (!view) {
     return (
       <section
         className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm sm:p-8"
-        aria-label="Информационное окно"
+        aria-label={messages.postLangRu}
       >
-        <p className="text-zinc-500">
-          {emptyMessage ??
-            "Пока нет опубликованных записей. Добавьте материал через Telegram-бота."}
-        </p>
+        <p className="text-zinc-500">{messages.emptyPost}</p>
       </section>
     );
   }
@@ -24,17 +31,14 @@ export function InfoWindow({ post, emptyMessage }: Props) {
   return (
     <section
       className="rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm sm:p-8"
-      aria-label="Информационное окно"
+      aria-label={messages.postLangRu}
     >
-      <header className="mb-4 border-b border-zinc-100 pb-4">
-        <p className="text-sm text-zinc-500">{formatDateRu(post.createdAt)}</p>
-        <h2 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
-          {post.title}
-        </h2>
-      </header>
-      <article className="whitespace-pre-wrap text-base leading-relaxed text-zinc-700">
-        {post.content}
-      </article>
+      <p className="mb-4 text-xs text-zinc-500">{messages.postStoredNote}</p>
+      <BilingualPostBlock
+        view={view}
+        locale={locale}
+        messages={messages}
+      />
     </section>
   );
 }

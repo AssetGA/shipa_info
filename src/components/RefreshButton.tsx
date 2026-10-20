@@ -3,7 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-export function RefreshButton() {
+type Props = {
+  label: string;
+  loadingLabel: string;
+};
+
+export function RefreshButton({ label, loadingLabel }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [clicked, setClicked] = useState(false);
@@ -23,7 +28,6 @@ export function RefreshButton() {
       type="button"
       onClick={handleRefresh}
       disabled={loading}
-      aria-label="Жаңарту — соңғы жазбаны MongoDB-тен қайта жүктеу"
       className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-white px-6 text-sm font-medium text-zinc-800 transition hover:bg-zinc-50 disabled:opacity-60"
     >
       <span
@@ -32,7 +36,7 @@ export function RefreshButton() {
       >
         ↻
       </span>
-      {loading ? "Жүктелуде..." : "Жаңарту"}
+      {loading ? loadingLabel : label}
     </button>
   );
 }
