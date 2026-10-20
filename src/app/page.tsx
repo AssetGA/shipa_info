@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { InfoWindow } from "@/components/InfoWindow";
 import { SiteHeader } from "@/components/SiteHeader";
+import { RefreshButton } from "@/components/RefreshButton";
 import { getLatestPublishedPost } from "@/lib/posts";
 
 export const instant = false;
@@ -38,7 +39,8 @@ export default async function Home() {
           <InfoWindow post={post} />
         )}
 
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <RefreshButton />
           <Link
             href="/list"
             className="inline-flex h-12 items-center justify-center rounded-xl bg-zinc-900 px-6 text-sm font-medium text-white transition hover:bg-zinc-800"
