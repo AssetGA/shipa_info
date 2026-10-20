@@ -1,6 +1,5 @@
 import { MongoClient, Db } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB_NAME ?? "shipa_info";
 
 declare global {
@@ -9,6 +8,7 @@ declare global {
 }
 
 function getClientPromise(): Promise<MongoClient> {
+  const uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error("MONGODB_URI is not set");
   }
