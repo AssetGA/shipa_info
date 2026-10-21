@@ -156,6 +156,14 @@ export const advanceUi = {
     stepCounter: (current: number, total: number) =>
       `Слайд ${current} из ${total}`,
     openHint: "Открыть инструкцию по авансу",
+    modePresentation: "Презентация",
+    modePdf: "PDF файл",
+    modeText: "Текст",
+    pageCounter: (current: number, total: number) =>
+      `Страница ${current} из ${total}`,
+    pdfHint:
+      "Если PDF не открывается, используйте режим «Презентация» или скачайте файл.",
+    downloadPdf: "Скачать PDF",
   },
   kk: {
     button: "Аванс",
@@ -168,6 +176,14 @@ export const advanceUi = {
     stepCounter: (current: number, total: number) =>
       `${current} / ${total} слайд`,
     openHint: "Аванс нұсқаулығын ашу",
+    modePresentation: "Презентация",
+    modePdf: "PDF файлы",
+    modeText: "Мәтін",
+    pageCounter: (current: number, total: number) =>
+      `${current} / ${total} бет`,
+    pdfHint:
+      "PDF ашылмай тұрса, «Презентация» режимін қолданыңыз немесе файлды жүктеп алыңыз.",
+    downloadPdf: "PDF жүктеу",
   },
 } as const;
 
