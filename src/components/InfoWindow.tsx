@@ -34,11 +34,7 @@ export function InfoWindow({ view, locale, messages }: Props) {
       aria-label={messages.postLangRu}
     >
       <p className="mb-4 text-xs text-zinc-500">{messages.postStoredNote}</p>
-      <BilingualPostBlock
-        view={view}
-        locale={locale}
-        messages={messages}
-      />
+      <BilingualPostBlock view={view} locale={locale} messages={messages} />
     </section>
   );
 }
